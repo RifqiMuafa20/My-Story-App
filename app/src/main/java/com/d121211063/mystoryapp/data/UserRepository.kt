@@ -5,6 +5,7 @@ import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.data.preference.UserPreference
 import com.d121211063.mystoryapp.data.remote.response.LoginResponse
 import com.d121211063.mystoryapp.data.remote.response.RegisterResponse
+import com.d121211063.mystoryapp.data.remote.response.StoriesResponse
 import com.d121211063.mystoryapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import retrofit2.await
@@ -38,6 +39,15 @@ class UserRepository private constructor(
     suspend fun login(email: String, password: String) : Result<LoginResponse> {
         return try {
             val response = apiService.login(email, password).await()
+            Result.Success(response)
+        } catch (e: Exception) {
+            Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
+        }
+    }
+
+    suspend fun getStories() : Result<StoriesResponse> {
+        return try {
+            val response = apiService.getStories().await()
             Result.Success(response)
         } catch (e: Exception) {
             Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())

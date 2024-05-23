@@ -21,4 +21,8 @@
     <string name="register_success">Register Success</string>
     <string name="login_failed">Login Failed</string>
     <string name="login_success">Login Success</string>
+    <string name="name_story">Nama Story</string>
+    <string name="description">Deskripsi</string>
+    <string name="story_date">Date</string>
+    <string name="load_data_failed">Gagal mengunduh data</string>
 </resources>
