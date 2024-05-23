@@ -16,14 +16,9 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val image = intent.getStringExtra(EXTRA_IMAGE)
-        val name = intent.getStringExtra(EXTRA_NAME).toString()
-        val description = intent.getStringExtra(EXTRA_DESCRIPTION).toString()
-        val latitude = intent.getDoubleExtra(EXTRA_LATITUDE, 0.0).toDouble()
-        val longitude = intent.getDoubleExtra(EXTRA_LONGITUDE, 0.0).toDouble()
-        val date = intent.getStringExtra(EXTRA_DATE).toString()
+        val storyItem = intent.getParcelableExtra<ListStoryItem>(EXTRA_STORY)
 
-        getDetailStory(ListStoryItem(image, date, name, description, longitude, id = "1", latitude))
+        getDetailStory(storyItem!!)
     }
 
     private fun getDetailStory(detail: ListStoryItem) {
@@ -36,11 +31,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        var EXTRA_IMAGE = "extra_image"
-        var EXTRA_NAME = "extra_name"
-        var EXTRA_DESCRIPTION = "extra_description"
-        var EXTRA_LATITUDE = "extra_latitude"
-        var EXTRA_LONGITUDE = "extra_longitude"
-        var EXTRA_DATE = "extra_date"
+        var EXTRA_STORY = "extra_story"
     }
 }

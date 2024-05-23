@@ -25,14 +25,10 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
 
         holder.itemView.setOnClickListener {
             val date = story.createdAt?.let { DateTime.getDate(it) }
+            val data = ListStoryItem(story.photoUrl, date, story.name, story.description, story.lon, story.id, story.lat)
 
             val intent = Intent(it.context, DetailActivity::class.java)
-            intent.putExtra(DetailActivity.EXTRA_IMAGE, story.photoUrl)
-            intent.putExtra(DetailActivity.EXTRA_NAME, story.name)
-            intent.putExtra(DetailActivity.EXTRA_DESCRIPTION, story.description)
-            intent.putExtra(DetailActivity.EXTRA_DATE, date)
-            intent.putExtra(DetailActivity.EXTRA_LATITUDE, story.lat)
-            intent.putExtra(DetailActivity.EXTRA_LONGITUDE, story.lon)
+            intent.putExtra(DetailActivity.EXTRA_STORY, data)
 
             it.context.startActivity(intent)
         }
