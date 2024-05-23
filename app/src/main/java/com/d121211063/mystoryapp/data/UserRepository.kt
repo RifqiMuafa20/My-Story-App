@@ -1,5 +1,6 @@
 package com.d121211063.mystoryapp.data
 
+import com.d121211063.mystoryapp.R
 import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.data.preference.UserPreference
 import com.d121211063.mystoryapp.data.remote.response.LoginResponse
@@ -25,12 +26,22 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
-    suspend fun register(name: String, email: String, password: String) : RegisterResponse {
-        return apiService.register(name, email, password).await()
+    suspend fun register(name: String, email: String, password: String): Result<RegisterResponse> {
+        return try {
+            val response = apiService.register(name, email, password).await()
+            Result.Success(response)
+        } catch (e: Exception) {
+            Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
+        }
     }
 
-    suspend fun login(email: String, password: String) : LoginResponse {
-        return apiService.login(email, password).await()
+    suspend fun login(email: String, password: String) : Result<LoginResponse> {
+        return try {
+            val response = apiService.login(email, password).await()
+            Result.Success(response)
+        } catch (e: Exception) {
+            Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
+        }
     }
 
     companion object {

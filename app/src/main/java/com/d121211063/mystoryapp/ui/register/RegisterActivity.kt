@@ -3,13 +3,13 @@ package com.d121211063.mystoryapp.ui.register
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.d121211063.mystoryapp.R
 import com.d121211063.mystoryapp.databinding.ActivityRegisterBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
 import com.d121211063.mystoryapp.ui.login.LoginActivity
@@ -44,22 +44,27 @@ class RegisterActivity : AppCompatActivity() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
 
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         binding.signupButton.setOnClickListener {
             val email = binding.edRegisterEmail.text.toString()
             val name = binding.edRegisterName.text.toString()
             val password = binding.edRegisterPassword.text.toString()
 
-            Log.d("RegisterActivity", "Email: $email, Name: $name, Password: $password")
-
             when {
                 email.isEmpty() -> {
-                    binding.edRegisterEmail.error = "Email is Empty"
+                    binding.edRegisterEmail.error = getString(R.string.email_is_empty)
                 }
                 name.isEmpty() -> {
-                    binding.edRegisterName.error = "Name is Empty"
+                    binding.edRegisterName.error = getString(R.string.name_is_empty)
                 }
                 password.isEmpty() -> {
-                    binding.edRegisterPassword.error = "Password is Empty"
+                    binding.edRegisterPassword.error = getString(R.string.password_is_empty)
+                }
+                password.length < 8 -> {
+                    binding.edRegisterPassword.error = getString(R.string.error_password)
                 }
                 else -> {
                     viewModel.register(name, email, password)
@@ -67,14 +72,23 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.isError.observe(this) {isError ->
+        viewModel.isError.observe(this) { isError ->
             if (isError) {
-                Toast.makeText(this, "Register Failed", Toast.LENGTH_SHORT).show()
+                viewModel.errorMessage.observe(this) { errorMessage ->
+                    Toast.makeText(this, errorMessage ?: R.string.register_failed.toString(), Toast.LENGTH_SHORT).show()
+                }
             } else {
-                Toast.makeText(this, "Register Success", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, LoginActivity::class.java))
+                Toast.makeText(this, R.string.register_success, Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
                 finish()
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

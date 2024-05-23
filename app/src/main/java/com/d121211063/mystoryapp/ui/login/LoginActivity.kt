@@ -2,18 +2,14 @@ package com.d121211063.mystoryapp.ui.login
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.d121211063.mystoryapp.R
-import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.databinding.ActivityLoginBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
 import com.d121211063.mystoryapp.ui.main.MainActivity
@@ -48,37 +44,49 @@ class LoginActivity : AppCompatActivity() {
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory).get(LoginViewModel::class.java)
 
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
         binding.loginButton.setOnClickListener {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
-            Log.d("LoginActivity", "Email: $email, Password: $password")
-
             when {
                 email.isEmpty() -> {
-                    binding.edLoginEmail.error = "Email is Empty"
+                    binding.edLoginEmail.error = getString(R.string.email_is_empty)
                 }
                 password.isEmpty() -> {
-                    binding.edLoginPassword.error = "Password is Empty"
+                    binding.edLoginPassword.error = getString(R.string.password_is_empty)
+                }
+                password.length < 8 -> {
+                    binding.edLoginPassword.error = getString(R.string.error_password)
                 }
                 else -> {
                     viewModel.login(email, password)
                 }
             }
+        }
 
-            viewModel.isError.observe(this) { isError ->
-                if (isError) {
-                    Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
-                } else {
-                    viewModel.saveSession(viewModel.userToken.value!!)
-
-                    Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                    startActivity(intent)
-                    finish()
+        viewModel.isError.observe(this) { isError ->
+            if (isError) {
+                viewModel.errorMessage.observe(this) { errorMessage ->
+                    Toast.makeText(this, errorMessage ?: R.string.login_failed.toString(), Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                viewModel.saveSession(viewModel.userToken.value!!)
+
+                Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

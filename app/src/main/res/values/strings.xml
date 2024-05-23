@@ -13,4 +13,12 @@
     <string name="email_hint">Masukkan email anda…</string>
     <string name="password_hint">Masukkan password anda…</string>
     <string name="nama_hint">Masukkan nama lengkap anda…</string>
+    <string name="email_is_empty">Email is Empty</string>
+    <string name="password_is_empty">Password is Empty</string>
+    <string name="name_is_empty">Name is Empty</string>
+    <string name="an_unknown_error_occurred">An unknown error occurred</string>
+    <string name="register_failed">Register Failed</string>
+    <string name="register_success">Register Success</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="login_success">Login Success</string>
 </resources>

@@ -1,12 +1,12 @@
 package com.d121211063.mystoryapp.ui.login
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.d121211063.mystoryapp.data.Result
 import com.d121211063.mystoryapp.data.UserRepository
 import com.d121211063.mystoryapp.data.preference.UserModel
-import com.d121211063.mystoryapp.data.remote.response.LoginResponse
-import com.d121211063.mystoryapp.data.remote.response.LoginResult
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel() {
@@ -16,6 +16,12 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _userToken = MutableLiveData<UserModel?>()
     val userToken: MutableLiveData<UserModel?> = _userToken
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> = _errorMessage
 
     fun saveSession(user : UserModel) {
         viewModelScope.launch {
@@ -28,18 +34,30 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
     fun login(email: String, password: String) {
+        _isLoading.value = true
         viewModelScope.launch {
-            try {
-                val response = repository.login(email, password)
-                val name : String = response.loginResult.name
-                val token : String = response.loginResult.token
+            val response = repository.login(email, password)
+            _isLoading.value = false
 
-                _userToken.value = UserModel(name, token)
-                _isError.value = false
-            } catch (e: Exception) {
-                _isError.value = true
+            when (response) {
+                is Result.Success -> {
+                    val name : String = response.data.loginResult.name
+                    val token : String = response.data.loginResult.token
+
+                    _userToken.value = UserModel(name, token)
+                    _isError.value = false
+                    _errorMessage.value = null
+                }
+                is Result.Error -> {
+                    _isError.value = true
+                    _errorMessage.value = response.error
+                }
+                is Result.Loading -> {
+                    _isError.value = false
+                    _errorMessage.value = null
+                    _isLoading.value = true
+                }
             }
         }
     }
-
 }
