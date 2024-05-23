@@ -5,6 +5,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -15,6 +18,7 @@ import com.d121211063.mystoryapp.R
 import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
 import com.d121211063.mystoryapp.databinding.ActivityMainBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
+import com.d121211063.mystoryapp.ui.add.AddStoryActivity
 import com.d121211063.mystoryapp.ui.login.LoginActivity
 import com.d121211063.mystoryapp.ui.welcome.WelcomeActivity
 
@@ -26,8 +30,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        supportActionBar?.setDisplayShowTitleEnabled(true)
 
         val factory: ViewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
@@ -60,6 +62,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) {
             showLoading(it)
         }
+
+        supportActionBar?.setDisplayShowTitleEnabled(true)
     }
 
     private fun setStoryData(listUser: List<ListStoryItem>) {
@@ -70,5 +74,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.app_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId){
+            R.id.action_logout -> {
+                viewModel.logout()
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                true
+            }
+            R.id.action_add -> {
+                startActivity(Intent(this, AddStoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

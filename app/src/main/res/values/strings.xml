@@ -25,4 +25,6 @@
     <string name="description">Deskripsi</string>
     <string name="story_date">Date</string>
     <string name="load_data_failed">Gagal mengunduh data</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_add">Tambah Story</string>
 </resources>

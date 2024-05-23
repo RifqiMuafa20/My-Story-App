@@ -57,9 +57,9 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
 //        return repository.getSession().asLiveData()
 //    }
 //
-//    fun logout(){
-//        viewModelScope.launch {
-//            repository.logout()
-//        }
-//    }
+    fun logout(){
+        viewModelScope.launch {
+            repository.logout()
+        }
+    }
 }
