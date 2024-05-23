@@ -1,5 +1,6 @@
 package com.d121211063.mystoryapp.data.remote.retrofit
 
+import com.d121211063.mystoryapp.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ApiConfig {
     companion object {
 
-        private const val baseUrl = "https://story-api.dicoding.dev/v1/"
+        private const val baseUrl = BuildConfig.BASE_URL
 
         fun getApiService(): ApiService {
             val loggingInterceptor =

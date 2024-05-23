@@ -1,5 +1,6 @@
 package com.d121211063.mystoryapp.data.remote.retrofit
 
+import com.d121211063.mystoryapp.data.remote.response.LoginResponse
 import com.d121211063.mystoryapp.data.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.Field
@@ -14,4 +15,11 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): Call<RegisterResponse>
+
+    @FormUrlEncoded
+    @POST("login")
+    fun login(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<LoginResponse>
 }
