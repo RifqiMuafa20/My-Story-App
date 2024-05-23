@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="biru_muda">#247bf2</color>
+    <color name="biru_tua">#1a5dbb</color>
+    <color name="orange_terang">#f2a424</color>
+    <color name="orange">#FDAF5F</color>
+    <color name="cyan_terang">#24d2f2</color>
+    <color name="cyan_sedang">#24b4f2</color>
+    <color name="merah_terang">#f22424</color>
+    <color name="abu_terang">#f2f2f2</color>
+    <color name="abu_gelap">#1c1c1c</color>
+</resources>
