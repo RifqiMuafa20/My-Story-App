@@ -1,17 +1,12 @@
 package com.d121211063.mystoryapp.ui.main
 
 import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.d121211063.mystoryapp.R
@@ -19,7 +14,6 @@ import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
 import com.d121211063.mystoryapp.databinding.ActivityMainBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
 import com.d121211063.mystoryapp.ui.add.AddStoryActivity
-import com.d121211063.mystoryapp.ui.login.LoginActivity
 import com.d121211063.mystoryapp.ui.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -63,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             showLoading(it)
         }
 
-        supportActionBar?.setDisplayShowTitleEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun setStoryData(listUser: List<ListStoryItem>) {

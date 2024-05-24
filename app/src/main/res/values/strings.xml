@@ -27,4 +27,12 @@
     <string name="load_data_failed">Gagal mengunduh data</string>
     <string name="action_logout">Logout</string>
     <string name="action_add">Tambah Story</string>
+    <string name="gallery">Galeri</string>
+    <string name="camera">Kamera</string>
+    <string name="upload">upload</string>
+    <string name="desc_hint">Description</string>
+    <string name="add_story">Tambah Story</string>
+    <string name="empty_image_warning">Silahkan masukkan berkas gambar terlebih dahulu</string>
+    <string name="upload_success">Upload Gambar berhasil</string>
+    <string name="title_detail">Detail Story</string>
 </resources>
