@@ -1,8 +1,10 @@
 package com.d121211063.mystoryapp.ui.main
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +32,19 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
             val intent = Intent(it.context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_STORY, data)
 
-            it.context.startActivity(intent)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                it.context as Activity,
+                androidx.core.util.Pair(holder.binding.imgItemPhoto, "image"),
+                androidx.core.util.Pair(holder.binding.tvItemName, "name"),
+                androidx.core.util.Pair(holder.binding.storyDescription, "description"),
+                androidx.core.util.Pair(holder.binding.storyDate, "date")
+            )
+
+            it.context.startActivity(intent, options.toBundle())
         }
     }
 
-    class MyViewHolder(private val binding: ItemStoriesBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(val binding: ItemStoriesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem){
             val date = story.createdAt?.let { DateTime.getDate(it) }
 
