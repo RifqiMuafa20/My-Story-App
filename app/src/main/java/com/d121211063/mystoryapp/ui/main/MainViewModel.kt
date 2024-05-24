@@ -25,9 +25,9 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _listStories = MutableLiveData<List<ListStoryItem>>()
     val listStories: LiveData<List<ListStoryItem>> = _listStories
 
-    init {
-        getStories()
-    }
+//    init {
+//        getStories()
+//    }
     fun getStories(){
         _isLoading.value = true
         viewModelScope.launch {
@@ -53,10 +53,10 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
-//    fun getSession(): LiveData<UserModel> {
-//        return repository.getSession().asLiveData()
-//    }
-//
+    fun getSession(): LiveData<UserModel> {
+        return repository.getSession().asLiveData()
+    }
+
     fun logout(){
         viewModelScope.launch {
             repository.logout()

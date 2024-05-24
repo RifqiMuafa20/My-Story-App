@@ -7,6 +7,7 @@ import com.d121211063.mystoryapp.data.remote.response.FileUploadResponse
 import com.d121211063.mystoryapp.data.remote.response.LoginResponse
 import com.d121211063.mystoryapp.data.remote.response.RegisterResponse
 import com.d121211063.mystoryapp.data.remote.response.StoriesResponse
+import com.d121211063.mystoryapp.data.remote.retrofit.ApiConfig
 import com.d121211063.mystoryapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -15,10 +16,11 @@ import retrofit2.await
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
-    private val apiService : ApiService
+    private var apiService : ApiService
 ) {
 
     suspend fun saveSession(user: UserModel) {
+        userPreference.logout()
         userPreference.saveSession(user)
     }
 
@@ -32,7 +34,7 @@ class UserRepository private constructor(
 
     suspend fun register(name: String, email: String, password: String): Result<RegisterResponse> {
         return try {
-            val response = apiService.register(name, email, password).await()
+            val response = apiService.register(name, email, password)
             Result.Success(response)
         } catch (e: Exception) {
             Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
@@ -41,7 +43,7 @@ class UserRepository private constructor(
 
     suspend fun login(email: String, password: String) : Result<LoginResponse> {
         return try {
-            val response = apiService.login(email, password).await()
+            val response = apiService.login(email, password)
             Result.Success(response)
         } catch (e: Exception) {
             Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
@@ -50,7 +52,7 @@ class UserRepository private constructor(
 
     suspend fun getStories() : Result<StoriesResponse> {
         return try {
-            val response = apiService.getStories().await()
+            val response = apiService.getStories()
             Result.Success(response)
         } catch (e: Exception) {
             Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
@@ -66,15 +68,25 @@ class UserRepository private constructor(
         }
     }
 
+    fun updateToken(token: String) {
+        instance?.let {
+            it.apiService = ApiConfig.getApiService(token)
+        }
+    }
     companion object {
         @Volatile
         private var instance: UserRepository? = null
+
         fun getInstance(
             userPreference: UserPreference,
             apiService: ApiService
-        ): UserRepository =
-            instance ?: synchronized(this) {
-                instance ?: UserRepository(userPreference, apiService)
-            }.also { instance = it }
+        ): UserRepository {
+            instance?.let { return it }
+            return synchronized(this) {
+                val newInstance = UserRepository(userPreference, apiService)
+                instance = newInstance
+                newInstance
+            }
+        }
     }
 }

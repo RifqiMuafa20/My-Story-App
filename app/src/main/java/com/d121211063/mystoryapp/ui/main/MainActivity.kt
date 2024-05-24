@@ -2,6 +2,7 @@ package com.d121211063.mystoryapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -31,19 +32,32 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvStories.layoutManager = layoutManager
 
-//        viewModel.getSession().observe(this) { session ->
-//            Log.d("MainActivity", "onCreate: $session")
-//            if (session.isLogin == false) {
-//                startActivity(Intent(this, WelcomeActivity::class.java))
-//                finish()
-//            } else {
-//                viewModel.getStories()
-//            }
-//        }
+        viewModel.getStories()
 
         viewModel.listStories.observe(this) { stories ->
             setStoryData(stories)
         }
+
+//        viewModel.getSession().observe(this) { session ->
+//            Log.d("MainActivity", "onCreate: $session")
+//            if (!session.isLogin) {
+//                Log.d("MainActivitygagal", "onCreate: ${session.isLogin}")
+//                val intent = Intent(this, WelcomeActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//                startActivity(intent)
+//                finish()
+//            } else {
+//                Log.d("MainActivityberhasil", "onCreate: ${session.isLogin}")
+//                val layoutManager = LinearLayoutManager(this)
+//                binding.rvStories.layoutManager = layoutManager
+//
+//                viewModel.getStories()
+//
+//                viewModel.listStories.observe(this) { stories ->
+//                    setStoryData(stories)
+//                }
+//            }
+//        }
 
         viewModel.isError.observe(this) { isError ->
             if (isError) {
@@ -80,7 +94,11 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId){
             R.id.action_logout -> {
                 viewModel.logout()
-                startActivity(Intent(this, WelcomeActivity::class.java))
+
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
                 true
             }
             R.id.action_add -> {

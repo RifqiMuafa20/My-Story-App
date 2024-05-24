@@ -14,8 +14,8 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="240dp"
-            android:layout_marginTop="54dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="160dp"
             android:contentDescription="@string/deskripsi_logo"
             app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
             app:layout_constraintEnd_toEndOf="parent"

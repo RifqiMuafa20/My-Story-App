@@ -45,6 +45,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     val token : String = response.data.loginResult.token
 
                     _userToken.value = UserModel(name, token)
+                    repository.updateToken(token)
+
                     _isError.value = false
                     _errorMessage.value = null
                 }

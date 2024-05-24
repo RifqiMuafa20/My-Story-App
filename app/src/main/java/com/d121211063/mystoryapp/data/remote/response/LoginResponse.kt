@@ -4,7 +4,7 @@ import kotlinx.parcelize.Parcelize
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
-@Parcelize
+
 data class LoginResponse(
 
 	@field:SerializedName("loginResult")
@@ -15,9 +15,8 @@ data class LoginResponse(
 
 	@field:SerializedName("message")
 	val message: String? = null
-) : Parcelable
+)
 
-@Parcelize
 data class LoginResult(
 
 	@field:SerializedName("name")
@@ -28,4 +27,4 @@ data class LoginResult(
 
 	@field:SerializedName("token")
 	val token: String
-) : Parcelable
+)
