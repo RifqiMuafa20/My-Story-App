@@ -56,6 +56,9 @@ class LoginActivity : AppCompatActivity() {
                 email.isEmpty() -> {
                     binding.edLoginEmail.error = getString(R.string.email_is_empty)
                 }
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.edLoginEmail.error = getString(R.string.invalid_email_error)
+                }
                 password.isEmpty() -> {
                     binding.edLoginPassword.error = getString(R.string.password_is_empty)
                 }

@@ -54,11 +54,14 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.edRegisterPassword.text.toString()
 
             when {
+                name.isEmpty() -> {
+                    binding.edRegisterName.error = getString(R.string.name_is_empty)
+                }
                 email.isEmpty() -> {
                     binding.edRegisterEmail.error = getString(R.string.email_is_empty)
                 }
-                name.isEmpty() -> {
-                    binding.edRegisterName.error = getString(R.string.name_is_empty)
+                !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                    binding.edRegisterEmail.error = getString(R.string.invalid_email_error)
                 }
                 password.isEmpty() -> {
                     binding.edRegisterPassword.error = getString(R.string.password_is_empty)

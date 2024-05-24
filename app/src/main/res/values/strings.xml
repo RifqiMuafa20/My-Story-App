@@ -35,4 +35,5 @@
     <string name="empty_image_warning">Silahkan masukkan berkas gambar terlebih dahulu</string>
     <string name="upload_success">Upload Gambar berhasil</string>
     <string name="title_detail">Detail Story</string>
+    <string name="invalid_email_error">Invalid email format</string>
 </resources>
