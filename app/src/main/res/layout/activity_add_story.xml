@@ -72,7 +72,7 @@
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:gravity="top"
-                android:minLines="8"
+                android:minLines="5"
                 android:textColor="@color/abu_gelap"
                 tools:ignore="SpeakableTextPresentCheck" />
 

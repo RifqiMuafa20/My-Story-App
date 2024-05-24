@@ -60,7 +60,6 @@
             android:fontFamily="sans-serif"
             android:text="@string/story_date"
             android:textSize="11sp"
-            android:textColor="@color/abu_abu"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="@+id/storyDescription"
             card_view:layout_constraintTop_toBottomOf="@+id/storyDescription" />
