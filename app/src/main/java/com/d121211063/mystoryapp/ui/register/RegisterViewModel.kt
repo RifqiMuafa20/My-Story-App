@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.d121211063.mystoryapp.data.Result
 import com.d121211063.mystoryapp.data.UserRepository
 import kotlinx.coroutines.launch
-import com.d121211063.mystoryapp.data.Result
 
 class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
 
@@ -29,10 +29,12 @@ class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
                     _isError.value = false
                     _errorMessage.value = null
                 }
+
                 is Result.Error -> {
                     _isError.value = true
                     _errorMessage.value = result.error
                 }
+
                 is Result.Loading -> {
                     _isError.value = false
                     _errorMessage.value = null

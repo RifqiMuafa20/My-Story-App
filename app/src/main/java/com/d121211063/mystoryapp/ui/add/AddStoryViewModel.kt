@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.d121211063.mystoryapp.data.UserRepository
 import com.d121211063.mystoryapp.data.Result
+import com.d121211063.mystoryapp.data.UserRepository
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class AddStoryViewModel(private val repository: UserRepository): ViewModel() {
+class AddStoryViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _isError = MutableLiveData<Boolean>()
     val isError: MutableLiveData<Boolean> = _isError
@@ -32,10 +32,12 @@ class AddStoryViewModel(private val repository: UserRepository): ViewModel() {
                     _isError.value = false
                     _errorMessage.value = null
                 }
+
                 is Result.Error -> {
                     _isError.value = true
                     _errorMessage.value = result.error
                 }
+
                 is Result.Loading -> {
                     _isError.value = false
                     _errorMessage.value = null

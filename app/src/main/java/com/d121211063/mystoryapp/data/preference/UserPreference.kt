@@ -21,8 +21,6 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
         }
-
-        Log.d("saveSession", "saveSession: $user")
     }
 
     fun getSession(): Flow<UserModel> {

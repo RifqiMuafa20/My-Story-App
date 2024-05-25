@@ -23,7 +23,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun saveSession(user : UserModel) {
+    fun saveSession(user: UserModel) {
         viewModelScope.launch {
             try {
                 val response = repository.saveSession(user)
@@ -33,6 +33,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
             }
         }
     }
+
     fun login(email: String, password: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -41,8 +42,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
 
             when (response) {
                 is Result.Success -> {
-                    val name : String = response.data.loginResult.name
-                    val token : String = response.data.loginResult.token
+                    val name: String = response.data.loginResult.name
+                    val token: String = response.data.loginResult.token
 
                     _userToken.value = UserModel(name, token)
                     repository.updateToken(token)
@@ -52,10 +53,12 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     _isError.value = false
                     _errorMessage.value = null
                 }
+
                 is Result.Error -> {
                     _isError.value = true
                     _errorMessage.value = response.error
                 }
+
                 is Result.Loading -> {
                     _isError.value = false
                     _errorMessage.value = null

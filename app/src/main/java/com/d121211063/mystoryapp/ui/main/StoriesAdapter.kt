@@ -27,7 +27,15 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
 
         holder.itemView.setOnClickListener {
             val date = story.createdAt?.let { DateTime.getDate(it) }
-            val data = ListStoryItem(story.photoUrl, date, story.name, story.description, story.lon, story.id, story.lat)
+            val data = ListStoryItem(
+                story.photoUrl,
+                date,
+                story.name,
+                story.description,
+                story.lon,
+                story.id,
+                story.lat
+            )
 
             val intent = Intent(it.context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_STORY, data)
@@ -45,7 +53,7 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
     }
 
     class MyViewHolder(val binding: ItemStoriesBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(story: ListStoryItem){
+        fun bind(story: ListStoryItem) {
             val date = story.createdAt?.let { DateTime.getDate(it) }
 
             binding.tvItemName.text = story.name
@@ -63,7 +71,10 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: ListStoryItem,
+                newItem: ListStoryItem
+            ): Boolean {
                 return oldItem == newItem
             }
         }

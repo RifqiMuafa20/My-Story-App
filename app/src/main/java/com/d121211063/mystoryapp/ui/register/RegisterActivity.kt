@@ -57,18 +57,23 @@ class RegisterActivity : AppCompatActivity() {
                 name.isEmpty() -> {
                     binding.edRegisterName.error = getString(R.string.name_is_empty)
                 }
+
                 email.isEmpty() -> {
                     binding.edRegisterEmail.error = getString(R.string.email_is_empty)
                 }
+
                 !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     binding.edRegisterEmail.error = getString(R.string.invalid_email_error)
                 }
+
                 password.isEmpty() -> {
                     binding.edRegisterPassword.error = getString(R.string.password_is_empty)
                 }
+
                 password.length < 8 -> {
                     binding.edRegisterPassword.error = getString(R.string.error_password)
                 }
+
                 else -> {
                     viewModel.register(name, email, password)
                 }
@@ -78,7 +83,11 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.isError.observe(this) { isError ->
             if (isError) {
                 viewModel.errorMessage.observe(this) { errorMessage ->
-                    Toast.makeText(this, errorMessage ?: R.string.register_failed.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        errorMessage ?: R.string.register_failed.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 Toast.makeText(this, R.string.register_success, Toast.LENGTH_SHORT).show()

@@ -6,7 +6,6 @@ import com.d121211063.mystoryapp.data.remote.response.RegisterResponse
 import com.d121211063.mystoryapp.data.remote.response.StoriesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -31,7 +30,7 @@ interface ApiService {
     ): LoginResponse
 
     @GET("stories")
-    suspend fun getStories() : StoriesResponse
+    suspend fun getStories(): StoriesResponse
 
     @Multipart
     @POST("stories")

@@ -2,11 +2,10 @@ package com.d121211063.mystoryapp.ui.welcome
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
-import com.d121211063.mystoryapp.R
+import androidx.appcompat.app.AppCompatActivity
 import com.d121211063.mystoryapp.databinding.ActivityWelcomeBinding
 import com.d121211063.mystoryapp.ui.login.LoginActivity
 import com.d121211063.mystoryapp.ui.register.RegisterActivity

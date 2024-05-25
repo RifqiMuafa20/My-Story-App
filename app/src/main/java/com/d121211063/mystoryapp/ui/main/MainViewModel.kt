@@ -1,16 +1,15 @@
 package com.d121211063.mystoryapp.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.d121211063.mystoryapp.data.UserRepository
-import kotlinx.coroutines.launch
 import com.d121211063.mystoryapp.data.Result
+import com.d121211063.mystoryapp.data.UserRepository
 import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
+import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: UserRepository) : ViewModel() {
 
@@ -43,10 +42,12 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
                     _errorMessage.value = null
                     isDataLoaded = true
                 }
+
                 is Result.Error -> {
                     _isError.value = true
                     _errorMessage.value = response.error
                 }
+
                 is Result.Loading -> {
                     _isError.value = false
                     _errorMessage.value = null
@@ -60,7 +61,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
         return repository.getSession().asLiveData()
     }
 
-    fun logout(){
+    fun logout() {
         viewModelScope.launch {
             repository.logout()
         }

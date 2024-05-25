@@ -56,15 +56,19 @@ class LoginActivity : AppCompatActivity() {
                 email.isEmpty() -> {
                     binding.edLoginEmail.error = getString(R.string.email_is_empty)
                 }
+
                 !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                     binding.edLoginEmail.error = getString(R.string.invalid_email_error)
                 }
+
                 password.isEmpty() -> {
                     binding.edLoginPassword.error = getString(R.string.password_is_empty)
                 }
+
                 password.length < 8 -> {
                     binding.edLoginPassword.error = getString(R.string.error_password)
                 }
+
                 else -> {
                     viewModel.login(email, password)
                 }
@@ -74,7 +78,11 @@ class LoginActivity : AppCompatActivity() {
         viewModel.isError.observe(this) { isError ->
             if (isError) {
                 viewModel.errorMessage.observe(this) { errorMessage ->
-                    Toast.makeText(this, errorMessage ?: R.string.login_failed.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        errorMessage ?: R.string.login_failed.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } else {
                 Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()

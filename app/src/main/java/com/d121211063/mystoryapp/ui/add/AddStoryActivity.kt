@@ -74,13 +74,13 @@ class AddStoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    private fun startGallery(){
+    private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
-    ){ uri: Uri? ->
+    ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
             showImage()
@@ -96,7 +96,7 @@ class AddStoryActivity : AppCompatActivity() {
 
     private val launcherCamera = registerForActivityResult(
         ActivityResultContracts.TakePicture()
-    ){ isSuccess ->
+    ) { isSuccess ->
         if (isSuccess) {
             showImage()
         }

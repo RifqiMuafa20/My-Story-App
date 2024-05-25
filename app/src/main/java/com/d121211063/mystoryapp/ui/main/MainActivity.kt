@@ -2,7 +2,6 @@ package com.d121211063.mystoryapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +19,6 @@ import com.d121211063.mystoryapp.ui.welcome.WelcomeActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
-    private var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.getSession().observe(this) { user ->
             if (!user.isLogin) {
-                Log.d("setupToken", "onCreate: ${user.token}")
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             }
-            Log.d("succestoken", "onCreate: ${user.token}")
         }
 
         setupObservers()
@@ -52,8 +48,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        Log.d("setupToken", token)
-
         viewModel.listStories.observe(this) { stories ->
             setStoryData(stories)
         }
@@ -61,7 +55,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.isError.observe(this) { isError ->
             if (isError) {
                 viewModel.errorMessage.observe(this) { errorMessage ->
-                    Toast.makeText(this, errorMessage ?: getString(R.string.load_data_failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        errorMessage ?: getString(R.string.load_data_failed),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -88,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId){
+        return when (item.itemId) {
             R.id.action_logout -> {
                 viewModel.logout()
 
@@ -98,10 +96,12 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 true
             }
+
             R.id.action_add -> {
                 startActivity(Intent(this, AddStoryActivity::class.java))
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

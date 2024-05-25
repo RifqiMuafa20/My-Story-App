@@ -12,11 +12,10 @@ import com.d121211063.mystoryapp.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.await
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
-    private var apiService : ApiService
+    private var apiService: ApiService
 ) {
 
     suspend fun saveSession(user: UserModel) {
@@ -41,7 +40,7 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun login(email: String, password: String) : Result<LoginResponse> {
+    suspend fun login(email: String, password: String): Result<LoginResponse> {
         return try {
             val response = apiService.login(email, password)
             Result.Success(response)
@@ -50,7 +49,7 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun getStories() : Result<StoriesResponse> {
+    suspend fun getStories(): Result<StoriesResponse> {
         return try {
             val response = apiService.getStories()
             Result.Success(response)
@@ -59,7 +58,10 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun uploadStory(file: MultipartBody.Part, description: RequestBody) : Result<FileUploadResponse> {
+    suspend fun uploadStory(
+        file: MultipartBody.Part,
+        description: RequestBody
+    ): Result<FileUploadResponse> {
         return try {
             val response = apiService.uploadImage(file, description)
             Result.Success(response)
@@ -73,6 +75,7 @@ class UserRepository private constructor(
             it.apiService = ApiConfig.getApiService(token)
         }
     }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
