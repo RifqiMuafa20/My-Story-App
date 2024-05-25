@@ -47,6 +47,8 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
                     _userToken.value = UserModel(name, token)
                     repository.updateToken(token)
 
+                    saveSession(userToken.value!!)
+
                     _isError.value = false
                     _errorMessage.value = null
                 }

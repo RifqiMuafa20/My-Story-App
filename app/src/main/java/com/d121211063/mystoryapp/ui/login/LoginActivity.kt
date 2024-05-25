@@ -77,8 +77,6 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, errorMessage ?: R.string.login_failed.toString(), Toast.LENGTH_SHORT).show()
                 }
             } else {
-                viewModel.saveSession(viewModel.userToken.value!!)
-
                 Toast.makeText(this, R.string.login_success, Toast.LENGTH_SHORT).show()
 
                 val intent = Intent(this, MainActivity::class.java)

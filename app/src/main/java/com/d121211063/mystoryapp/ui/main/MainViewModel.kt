@@ -1,5 +1,6 @@
 package com.d121211063.mystoryapp.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,10 +26,11 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
     private val _listStories = MutableLiveData<List<ListStoryItem>>()
     val listStories: LiveData<List<ListStoryItem>> = _listStories
 
-//    init {
-//        getStories()
-//    }
-    fun getStories(){
+    private var isDataLoaded = false
+
+    fun getStories() {
+        if (isDataLoaded) return
+
         _isLoading.value = true
         viewModelScope.launch {
             val response = repository.getStories()
@@ -39,6 +41,7 @@ class MainViewModel(private val repository: UserRepository) : ViewModel() {
                     _listStories.value = response.data.listStory
                     _isError.value = false
                     _errorMessage.value = null
+                    isDataLoaded = true
                 }
                 is Result.Error -> {
                     _isError.value = true

@@ -20,6 +20,7 @@ import com.d121211063.mystoryapp.ui.welcome.WelcomeActivity
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MainViewModel
+    private var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,37 +33,35 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvStories.layoutManager = layoutManager
 
-        viewModel.getStories()
+        viewModel.getSession().observe(this) { user ->
+            if (!user.isLogin) {
+                Log.d("setupToken", "onCreate: ${user.token}")
+                startActivity(Intent(this, WelcomeActivity::class.java))
+                finish()
+            }
+            Log.d("succestoken", "onCreate: ${user.token}")
+        }
+
+        setupObservers()
+
+        if (savedInstanceState == null) {
+            viewModel.getStories()
+        }
+
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
+
+    private fun setupObservers() {
+        Log.d("setupToken", token)
 
         viewModel.listStories.observe(this) { stories ->
             setStoryData(stories)
         }
 
-//        viewModel.getSession().observe(this) { session ->
-//            Log.d("MainActivity", "onCreate: $session")
-//            if (!session.isLogin) {
-//                Log.d("MainActivitygagal", "onCreate: ${session.isLogin}")
-//                val intent = Intent(this, WelcomeActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-//                startActivity(intent)
-//                finish()
-//            } else {
-//                Log.d("MainActivityberhasil", "onCreate: ${session.isLogin}")
-//                val layoutManager = LinearLayoutManager(this)
-//                binding.rvStories.layoutManager = layoutManager
-//
-//                viewModel.getStories()
-//
-//                viewModel.listStories.observe(this) { stories ->
-//                    setStoryData(stories)
-//                }
-//            }
-//        }
-
         viewModel.isError.observe(this) { isError ->
             if (isError) {
                 viewModel.errorMessage.observe(this) { errorMessage ->
-                    Toast.makeText(this, errorMessage ?: R.string.load_data_failed.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, errorMessage ?: getString(R.string.load_data_failed), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -70,8 +69,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) {
             showLoading(it)
         }
-
-        supportActionBar?.setDisplayShowTitleEnabled(false)
     }
 
     private fun setStoryData(listUser: List<ListStoryItem>) {
