@@ -30,12 +30,14 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun getDetailStory(detail: ListStoryItem) {
-        binding.tvItemName.text = detail.name
-        binding.storyDescription.text = detail.description
-        binding.storyDate.text = detail.createdAt
-        Glide.with(this@DetailActivity)
-            .load(detail.photoUrl)
-            .into(binding.imgItemPhoto)
+        binding.apply {
+            tvItemName.text = detail.name
+            storyDescription.text = detail.description
+            storyDate.text = detail.createdAt
+            Glide.with(this@DetailActivity)
+                .load(detail.photoUrl)
+                .into(imgItemPhoto)
+        }
     }
 
     companion object {

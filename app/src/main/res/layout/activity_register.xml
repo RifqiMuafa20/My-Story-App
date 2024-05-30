@@ -35,8 +35,8 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/title_signup_page"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_semi_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -44,9 +44,7 @@
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                style="@style/textInput.title"
                 android:layout_marginTop="32dp"
                 android:text="@string/name"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,11 +52,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/nameEditTextLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                style="@style/textInput.layout"
                 android:hint="@string/nama_hint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,18 +61,13 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_register_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:paddingStart="48dp" />
+                    style="@style/textInput.text"
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/emailTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                style="@style/textInput.title"
                 android:layout_marginTop="16dp"
                 android:text="@string/email"
                 app:layout_constraintStart_toStartOf="parent"
@@ -86,11 +75,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailEditTextLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                style="@style/textInput.layout"
                 android:hint="@string/email_hint"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -100,29 +85,20 @@
 
                 <com.d121211063.mystoryapp.customView.EmailEdit
                     android:id="@+id/ed_register_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="54dp"
-                    android:ems="10"
-                    android:inputType="textEmailAddress"
-                    android:paddingStart="48dp" />
+                    style="@style/textInput.text"
+                    android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/passwordTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                style="@style/textInput.title"
                 android:text="@string/password"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/emailEditTextLayout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordEditTextLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
+                style="@style/textInput.layout"
                 android:hint="@string/password_hint"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="true"
@@ -134,20 +110,14 @@
 
                 <com.d121211063.mystoryapp.customView.PasswordEdit
                     android:id="@+id/ed_register_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword"
-                    android:paddingStart="48dp" />
+                    style="@style/textInput.text"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/signupButton"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="32dp"
+                style="@style/button"
+                android:layout_marginTop="25dp"
                 android:text="@string/signup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

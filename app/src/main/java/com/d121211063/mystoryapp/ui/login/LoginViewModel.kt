@@ -23,7 +23,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun saveSession(user: UserModel) {
+    private fun saveSession(user: UserModel) {
         viewModelScope.launch {
             try {
                 val response = repository.saveSession(user)
