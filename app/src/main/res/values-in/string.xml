@@ -42,4 +42,10 @@
     <string name="description_transition">desc</string>
     <string name="date_transition">date</string>
     <string name="action_maps">Peta</string>
+    <string name="confirmation">Konfirmasi</string>
+    <string name="confirmation_logout">Apakah Anda yakin ingin keluar dari aplikasi?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+    <string name="granted">Izin diberikan</string>
+    <string name="denied">Izin ditolak</string>
 </resources>

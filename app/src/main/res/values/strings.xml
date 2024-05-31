@@ -41,4 +41,10 @@
     <string name="description_transition">desc</string>
     <string name="date_transition">date</string>
     <string name="action_maps">Maps</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="confirmation_logout">Are you sure you want to exit the app?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="granted">Permission request granted</string>
+    <string name="denied">Permission request denied</string>
 </resources>

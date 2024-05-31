@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,11 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             viewModel.getStories()
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
+            startActivity(intent)
         }
 
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -89,17 +95,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_logout -> {
-                viewModel.logout()
-
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish()
-                true
-            }
-
-            R.id.action_add -> {
-                startActivity(Intent(this, AddStoryActivity::class.java))
+                showConfirmationDialog()
                 true
             }
 
@@ -110,5 +106,24 @@ class MainActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(R.string.confirmation)
+        builder.setMessage(R.string.confirmation_logout)
+        builder.setPositiveButton(R.string.yes) { dialog, which ->
+            viewModel.logout()
+
+            val intent = Intent(this, WelcomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+            finish()
+        }
+        builder.setNegativeButton(R.string.no) { dialog, which ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
     }
 }

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -37,9 +36,9 @@ class AddStoryActivity : AppCompatActivity() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                Toast.makeText(this, "Permission request granted", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.granted, Toast.LENGTH_LONG).show()
             } else {
-                Toast.makeText(this, "Permission request denied", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.denied, Toast.LENGTH_LONG).show()
             }
         }
 
@@ -85,7 +84,7 @@ class AddStoryActivity : AppCompatActivity() {
             currentImageUri = uri
             showImage()
         } else {
-            Log.d("Photo Picker", "No media selected")
+
         }
     }
 
@@ -104,7 +103,6 @@ class AddStoryActivity : AppCompatActivity() {
 
     private fun showImage() {
         currentImageUri?.let {
-            Log.d("Image URI", "Show image: $it")
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -136,7 +134,6 @@ class AddStoryActivity : AppCompatActivity() {
 
         currentImageUri?.let { uri ->
             val imageFile = uriToFile(uri, this).reduceFileImage()
-            Log.d("Image File", "showImage: ${imageFile.path}")
             val description = binding.edDescription.text.toString()
 
             val requestBody = description.toRequestBody("text/plain".toMediaType())
