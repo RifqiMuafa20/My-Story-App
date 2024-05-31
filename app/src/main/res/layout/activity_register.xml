@@ -17,7 +17,7 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="150dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
                 android:contentDescription="@string/deskripsi_logo"
@@ -25,17 +25,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline2"
-                app:srcCompat="@drawable/app_logo" />
+                app:srcCompat="@drawable/icon_user" />
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="36dp"
                 android:layout_marginEnd="32dp"
                 android:text="@string/title_signup_page"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:fontFamily="@font/poppins_semi_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
