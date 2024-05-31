@@ -78,10 +78,12 @@ class UserRepository private constructor(
 
     suspend fun uploadStory(
         file: MultipartBody.Part,
-        description: RequestBody
+        description: RequestBody,
+        lat: RequestBody? = null,
+        lon: RequestBody? = null
     ): Result<FileUploadResponse> {
         return try {
-            val response = apiService.uploadImage(file, description)
+            val response = apiService.uploadImage(file, description, lat, lon)
             Result.Success(response)
         } catch (e: Exception) {
             Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())

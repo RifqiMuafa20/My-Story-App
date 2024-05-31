@@ -22,8 +22,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:visibility="gone"
-        app:layout_anchorGravity="center"
         app:layout_anchor="@id/rvStories"
+        app:layout_anchorGravity="center"
         tools:visibility="visible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:contentDescription="@string/add_story"
         android:foregroundGravity="bottom"
         app:fabSize="normal"
         app:layout_anchor="@id/rvStories"

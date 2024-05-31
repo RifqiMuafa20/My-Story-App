@@ -48,4 +48,5 @@
     <string name="granted">Permission request granted</string>
     <string name="denied">Permission request denied</string>
     <string name="retry">Try Again</string>
+    <string name="input_location">Location</string>
 </resources>

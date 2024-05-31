@@ -3,10 +3,12 @@ package com.d121211063.mystoryapp.ui.add
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,6 +22,8 @@ import com.d121211063.mystoryapp.ui.main.MainActivity
 import com.d121211063.mystoryapp.util.getImageUri
 import com.d121211063.mystoryapp.util.reduceFileImage
 import com.d121211063.mystoryapp.util.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -30,6 +34,9 @@ class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddStoryBinding
     private lateinit var viewModel: AddStoryViewModel
     private var currentImageUri: Uri? = null
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var lat: Double? = null
+    private var lon: Double? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -42,18 +49,35 @@ class AddStoryActivity : AppCompatActivity() {
             }
         }
 
-    private fun allPermissionsGranted() =
+    private fun cameraPermissionsGranted() =
         ContextCompat.checkSelfPermission(
             this,
             REQUIRED_PERMISSION
         ) == PackageManager.PERMISSION_GRANTED
+
+    private fun getMyLocation() {
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    lat = location.latitude
+                    lon = location.longitude
+                }
+            }
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (!allPermissionsGranted()) {
+        if (!cameraPermissionsGranted()) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSION)
         }
 
@@ -68,6 +92,17 @@ class AddStoryActivity : AppCompatActivity() {
         binding.uploadButton.setOnClickListener {
             uploadImage()
         }
+
+        binding.materialSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
+            if (isChecked) {
+                getMyLocation()
+            } else {
+                lat = null
+                lon = null
+            }
+        }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         supportActionBar?.title = getString(R.string.add_story)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -137,6 +172,8 @@ class AddStoryActivity : AppCompatActivity() {
             val description = binding.edDescription.text.toString()
 
             val requestBody = description.toRequestBody("text/plain".toMediaType())
+            val requestLat = lat?.toString()?.toRequestBody("text/plain".toMediaType())
+            val requestLong = lon?.toString()?.toRequestBody("text/plain".toMediaType())
             val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
             val multipartBody = MultipartBody.Part.createFormData(
                 "photo",
@@ -144,7 +181,7 @@ class AddStoryActivity : AppCompatActivity() {
                 requestImageFile
             )
 
-            viewModel.addStory(multipartBody, requestBody)
+            viewModel.addStory(multipartBody, requestBody, requestLat, requestLong)
 
         } ?: showToast(getString(R.string.empty_image_warning))
     }

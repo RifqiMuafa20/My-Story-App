@@ -21,10 +21,15 @@ class AddStoryViewModel(private val repository: UserRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun addStory(file: MultipartBody.Part, description: RequestBody) {
+    fun addStory(
+        file: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody?,
+        lon: RequestBody?
+    ) {
         _isLoading.value = true
         viewModelScope.launch {
-            val result = repository.uploadStory(file, description)
+            val result = repository.uploadStory(file, description, lat, lon)
             _isLoading.value = false
 
             when (result) {
