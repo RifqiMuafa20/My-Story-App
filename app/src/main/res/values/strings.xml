@@ -49,4 +49,5 @@
     <string name="denied">Permission request denied</string>
     <string name="retry">Try Again</string>
     <string name="input_location">Location</string>
+    <string name="failed_location">Location is not found</string>
 </resources>
