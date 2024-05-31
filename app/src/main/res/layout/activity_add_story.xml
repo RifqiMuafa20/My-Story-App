@@ -23,12 +23,12 @@
         <ImageView
             android:id="@+id/previewImageView"
             android:layout_width="0dp"
-            android:layout_height="320dp"
+            android:layout_height="300dp"
             android:layout_margin="36dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_place_holder" />
+            app:srcCompat="@drawable/camera_preview" />
 
         <Button
             android:id="@+id/galleryButton"
@@ -87,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="36dp"
-            android:layout_marginVertical="24dp"
+            android:layout_marginVertical="48dp"
             android:text="@string/upload"
             android:fontFamily="@font/poppins_medium"
             android:textSize="13sp"

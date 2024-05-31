@@ -14,6 +14,7 @@ import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
 import com.d121211063.mystoryapp.databinding.ActivityMainBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
 import com.d121211063.mystoryapp.ui.add.AddStoryActivity
+import com.d121211063.mystoryapp.ui.maps.MapsActivity
 import com.d121211063.mystoryapp.ui.welcome.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
@@ -99,6 +100,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_add -> {
                 startActivity(Intent(this, AddStoryActivity::class.java))
+                true
+            }
+
+            R.id.action_maps -> {
+                startActivity(Intent(this, MapsActivity::class.java))
                 true
             }
 

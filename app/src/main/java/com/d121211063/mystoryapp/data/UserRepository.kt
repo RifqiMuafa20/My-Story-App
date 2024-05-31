@@ -58,6 +58,15 @@ class UserRepository private constructor(
         }
     }
 
+    suspend fun getStoriesLocation(): Result<StoriesResponse> {
+        return try {
+            val response = apiService.getStoriesWithLocation()
+            Result.Success(response)
+        } catch (e: Exception) {
+            Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
+        }
+    }
+
     suspend fun uploadStory(
         file: MultipartBody.Part,
         description: RequestBody
