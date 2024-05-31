@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(R.string.confirmation)
         builder.setMessage(R.string.confirmation_logout)
-        builder.setPositiveButton(R.string.yes) { dialog, which ->
+        builder.setPositiveButton(R.string.yes) { _, _ ->
             viewModel.logout()
 
             val intent = Intent(this, WelcomeActivity::class.java)
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        builder.setNegativeButton(R.string.no) { dialog, which ->
+        builder.setNegativeButton(R.string.no) { dialog, _ ->
             dialog.dismiss()
         }
         val dialog = builder.create()

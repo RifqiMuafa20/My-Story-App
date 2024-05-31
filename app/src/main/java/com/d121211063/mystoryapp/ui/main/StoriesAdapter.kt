@@ -30,15 +30,17 @@ class StoriesAdapter :
 
         holder.itemView.setOnClickListener {
             val date = story?.createdAt?.let { DateTime.getDate(it) }
-            val data = ListStoryItem(
-                story?.photoUrl,
-                date,
-                story?.name,
-                story?.description,
-                story?.lon,
-                story?.id,
-                story?.lat
-            )
+            val data = story?.let { it1 ->
+                ListStoryItem(
+                    story.photoUrl,
+                    date,
+                    story.name,
+                    story.description,
+                    story.lon,
+                    it1.id,
+                    story.lat
+                )
+            }
 
             val intent = Intent(it.context, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_STORY, data)

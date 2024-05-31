@@ -26,7 +26,7 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel() {
     private fun saveSession(user: UserModel) {
         viewModelScope.launch {
             try {
-                val response = repository.saveSession(user)
+                repository.saveSession(user)
                 _isError.value = false
             } catch (e: Exception) {
                 _isError.value = true

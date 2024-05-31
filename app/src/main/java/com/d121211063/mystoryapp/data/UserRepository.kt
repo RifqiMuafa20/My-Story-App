@@ -1,12 +1,14 @@
 package com.d121211063.mystoryapp.data
 
 import androidx.lifecycle.LiveData
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.d121211063.mystoryapp.R
-import com.d121211063.mystoryapp.data.data.StoriesPagingSource
+import com.d121211063.mystoryapp.data.data.StoryRemoteMediator
+import com.d121211063.mystoryapp.data.local.StoryDatabase
 import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.data.preference.UserPreference
 import com.d121211063.mystoryapp.data.remote.response.FileUploadResponse
@@ -21,6 +23,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class UserRepository private constructor(
+    private val storyDatabase: StoryDatabase,
     private val userPreference: UserPreference,
     private var apiService: ApiService
 ) {
@@ -57,12 +60,14 @@ class UserRepository private constructor(
     }
 
     fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService),
             pagingSourceFactory = {
-                StoriesPagingSource(apiService)
+                storyDatabase.storyDao().getAllStories()
             }
         ).liveData
     }
@@ -101,12 +106,13 @@ class UserRepository private constructor(
         private var instance: UserRepository? = null
 
         fun getInstance(
+            storyDatabase: StoryDatabase,
             userPreference: UserPreference,
             apiService: ApiService
         ): UserRepository {
             instance?.let { return it }
             return synchronized(this) {
-                val newInstance = UserRepository(userPreference, apiService)
+                val newInstance = UserRepository(storyDatabase, userPreference, apiService)
                 instance = newInstance
                 newInstance
             }
