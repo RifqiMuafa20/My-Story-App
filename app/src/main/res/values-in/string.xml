@@ -48,4 +48,5 @@
     <string name="no">Tidak</string>
     <string name="granted">Izin diberikan</string>
     <string name="denied">Izin ditolak</string>
+    <string name="retry">Coba Lagi</string>
 </resources>

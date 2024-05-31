@@ -1,9 +1,16 @@
 package com.d121211063.mystoryapp.data
 
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.d121211063.mystoryapp.R
+import com.d121211063.mystoryapp.data.data.StoriesPagingSource
 import com.d121211063.mystoryapp.data.preference.UserModel
 import com.d121211063.mystoryapp.data.preference.UserPreference
 import com.d121211063.mystoryapp.data.remote.response.FileUploadResponse
+import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
 import com.d121211063.mystoryapp.data.remote.response.LoginResponse
 import com.d121211063.mystoryapp.data.remote.response.RegisterResponse
 import com.d121211063.mystoryapp.data.remote.response.StoriesResponse
@@ -49,13 +56,15 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun getStories(): Result<StoriesResponse> {
-        return try {
-            val response = apiService.getStories()
-            Result.Success(response)
-        } catch (e: Exception) {
-            Result.Error(e.message ?: R.string.an_unknown_error_occurred.toString())
-        }
+    fun getStories(): LiveData<PagingData<ListStoryItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                StoriesPagingSource(apiService)
+            }
+        ).liveData
     }
 
     suspend fun getStoriesLocation(): Result<StoriesResponse> {

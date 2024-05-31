@@ -4,14 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.d121211063.mystoryapp.R
-import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
 import com.d121211063.mystoryapp.databinding.ActivityMainBinding
 import com.d121211063.mystoryapp.ui.ViewModelFactory
 import com.d121211063.mystoryapp.ui.add.AddStoryActivity
@@ -42,10 +39,6 @@ class MainActivity : AppCompatActivity() {
 
         setupObservers()
 
-        if (savedInstanceState == null) {
-            viewModel.getStories()
-        }
-
         binding.fabAdd.setOnClickListener {
             val intent = Intent(this@MainActivity, AddStoryActivity::class.java)
             startActivity(intent)
@@ -55,35 +48,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.listStories.observe(this) { stories ->
-            setStoryData(stories)
-        }
+        val adapter = StoriesAdapter()
+        binding.rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
-        viewModel.isError.observe(this) { isError ->
-            if (isError) {
-                viewModel.errorMessage.observe(this) { errorMessage ->
-                    Toast.makeText(
-                        this,
-                        errorMessage ?: getString(R.string.load_data_failed),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        viewModel.stories.observe(this) {
+            if (it != null) {
+                adapter.submitData(lifecycle, it)
             }
         }
-
-        viewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
-    }
-
-    private fun setStoryData(listUser: List<ListStoryItem>) {
-        val adapter = StoriesAdapter()
-        adapter.submitList(listUser)
-        binding.rvStories.adapter = adapter
-    }
-
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

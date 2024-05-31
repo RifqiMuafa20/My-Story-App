@@ -5,8 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.d121211063.mystoryapp.data.remote.response.ListStoryItem
@@ -14,7 +14,8 @@ import com.d121211063.mystoryapp.databinding.ItemStoriesBinding
 import com.d121211063.mystoryapp.ui.detail.DetailActivity
 import com.d121211063.mystoryapp.util.DateTime
 
-class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
+class StoriesAdapter :
+    PagingDataAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoriesAdapter.MyViewHolder {
         val binding = ItemStoriesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,18 +24,20 @@ class StoriesAdapter : ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(D
 
     override fun onBindViewHolder(holder: StoriesAdapter.MyViewHolder, position: Int) {
         val story = getItem(position)
-        holder.bind(story)
+        if (story != null) {
+            holder.bind(story)
+        }
 
         holder.itemView.setOnClickListener {
-            val date = story.createdAt?.let { DateTime.getDate(it) }
+            val date = story?.createdAt?.let { DateTime.getDate(it) }
             val data = ListStoryItem(
-                story.photoUrl,
+                story?.photoUrl,
                 date,
-                story.name,
-                story.description,
-                story.lon,
-                story.id,
-                story.lat
+                story?.name,
+                story?.description,
+                story?.lon,
+                story?.id,
+                story?.lat
             )
 
             val intent = Intent(it.context, DetailActivity::class.java)
