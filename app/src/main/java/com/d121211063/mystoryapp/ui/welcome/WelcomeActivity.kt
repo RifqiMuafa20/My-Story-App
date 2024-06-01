@@ -36,7 +36,7 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
-        binding.loginButton.setOnClickListener {
+        binding.loginButtonWelcome.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
