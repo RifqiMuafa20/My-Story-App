@@ -13,8 +13,8 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="160dp"
+            android:layout_height="260dp"
+            android:layout_marginTop="100dp"
             android:contentDescription="@string/deskripsi_logo"
             app:layout_constraintBottom_toTopOf="@+id/guidelineHorizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/app_logo_background" />
+            app:srcCompat="@drawable/welcome_icon" />
 
         <TextView
             android:id="@+id/titleTextView"
