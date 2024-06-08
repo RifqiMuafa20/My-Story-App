@@ -52,4 +52,5 @@
     <string name="input_location">Lokasi</string>
     <string name="failed_location">Lokasi tidak ditemukan</string>
     <string name="logo_aplikasi">Logo Aplikasi</string>
+    <string name="wait_for_loading">Tunggu Sebentar</string>
 </resources>
