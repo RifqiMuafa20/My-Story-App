@@ -30,13 +30,6 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvStories.layoutManager = layoutManager
 
-        viewModel.getSession().observe(this) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(this, WelcomeActivity::class.java))
-                finish()
-            }
-        }
-
         setupObservers()
 
         binding.fabAdd.setOnClickListener {

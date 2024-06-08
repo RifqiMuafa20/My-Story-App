@@ -51,4 +51,5 @@
     <string name="retry">Coba Lagi</string>
     <string name="input_location">Lokasi</string>
     <string name="failed_location">Lokasi tidak ditemukan</string>
+    <string name="logo_aplikasi">Logo Aplikasi</string>
 </resources>

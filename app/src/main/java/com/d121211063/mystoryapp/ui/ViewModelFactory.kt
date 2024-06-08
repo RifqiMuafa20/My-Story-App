@@ -10,6 +10,7 @@ import com.d121211063.mystoryapp.ui.login.LoginViewModel
 import com.d121211063.mystoryapp.ui.main.MainViewModel
 import com.d121211063.mystoryapp.ui.maps.MapsViewModel
 import com.d121211063.mystoryapp.ui.register.RegisterViewModel
+import com.d121211063.mystoryapp.ui.splashScreen.SplashScreenViewModel
 
 class ViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -35,6 +36,10 @@ class ViewModelFactory(private val repository: UserRepository) :
 
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
                 MapsViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
+                SplashScreenViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

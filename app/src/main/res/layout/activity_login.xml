@@ -24,6 +24,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guidelineHorizontal2"
+                app:layout_constraintVertical_bias="0.372"
                 app:srcCompat="@drawable/icon_user" />
 
             <TextView
@@ -89,7 +90,7 @@
                 android:id="@+id/guidelineHorizontal"
                 style="@style/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.4"
+                app:layout_constraintGuide_percent="0.7"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
